@@ -49,7 +49,7 @@ floating_modifier $mod
 tiling_drag modifier titlebar
 
 # start a terminal
-bindsym $mod+Return exec i3-sensible-terminal
+bindsym $mod+Return exec alacritty
 
 # kill focused window
 bindsym $mod+q kill
@@ -126,41 +126,28 @@ set $ws9 "9"
 set $ws10 "10"
 
 # switch to workspace
-bindsym $mod+1 workspace  $ws1
-bindsym $mod+2 workspace  $ws2
-bindsym $mod+3 workspace  $ws3
-bindsym $mod+4 workspace  $ws4
-bindsym $mod+5 workspace  $ws5
-bindsym $mod+6 workspace  $ws6
-bindsym $mod+7 workspace  $ws7
-bindsym $mod+8 workspace  $ws8
-bindsym $mod+9 workspace  $ws9
-bindsym $mod+0 workspace  $ws10
+bindsym $mod+1 workspace number $ws1
+bindsym $mod+2 workspace number $ws2
+bindsym $mod+3 workspace number $ws3
+bindsym $mod+4 workspace number $ws4
+bindsym $mod+5 workspace number $ws5
+bindsym $mod+6 workspace number $ws6
+bindsym $mod+7 workspace number $ws7
+bindsym $mod+8 workspace number $ws8
+bindsym $mod+9 workspace number $ws9
+bindsym $mod+0 workspace number $ws10
 
 # move focused container to workspace
-bindsym $mod+Shift+1 move container to workspace  $ws1
-bindsym $mod+Shift+2 move container to workspace  $ws2
-bindsym $mod+Shift+3 move container to workspace  $ws3
-bindsym $mod+Shift+4 move container to workspace  $ws4
-bindsym $mod+Shift+5 move container to workspace  $ws5
-bindsym $mod+Shift+6 move container to workspace  $ws6
-bindsym $mod+Shift+7 move container to workspace  $ws7
-bindsym $mod+Shift+8 move container to workspace  $ws8
-bindsym $mod+Shift+9 move container to workspace  $ws9
-bindsym $mod+Shift+0 move container to workspace  $ws10
-
-#for automatcily open a service in specific workspace
-
-assign [class="pavucontrol"] $ws10
-exec --no-startup-id pavucontrol
-assign [class="Code"] $ws2
-#exec --no-startup-id code
-assign [class="Emacs"] $ws3
-#exec --no-startup-id emacs
-assign [class="Google-chrome"] $ws5
-#exec --no-startup-id google-chrome-stable
-
-
+bindsym $mod+Shift+1 move container to workspace number $ws1
+bindsym $mod+Shift+2 move container to workspace number $ws2
+bindsym $mod+Shift+3 move container to workspace number $ws3
+bindsym $mod+Shift+4 move container to workspace number $ws4
+bindsym $mod+Shift+5 move container to workspace number $ws5
+bindsym $mod+Shift+6 move container to workspace number $ws6
+bindsym $mod+Shift+7 move container to workspace number $ws7
+bindsym $mod+Shift+8 move container to workspace number $ws8
+bindsym $mod+Shift+9 move container to workspace number $ws9
+bindsym $mod+Shift+0 move container to workspace number $ws10
 
 # reload the configuration file
 bindsym $mod+Shift+c reload
@@ -196,6 +183,7 @@ mode "resize" {
 
 bindsym $mod+r mode "resize"
 
+
 set $bg-color 	         #2f343f
 set $inactive-bg-color   #2f343f
 set $text-color          #f3f4f5
@@ -211,18 +199,27 @@ client.urgent           $urgent-bg-color    $urgent-bg-color   $text-color      
 
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
-exec_always --no-startup-id nitrogen --restore
+#bar {
+#        status_command i3status
+#}
 
-exec --no-startup-id xinput set-prop "SYNA3071:00 06CB:82F1 Touchpad" "libinput Tapping Enabled" 1
-
-
-bar {	
+bar {
 	position top
-        status_command i3status -c ~/.config/i3/i3status.conf
+	status_command /usr/bin/bumblebee-status \
+		-m cpu memory battery time \
+		-p time.formate "%H:%M" \
+		-t greyish-powerline
 }
 
-exec --no-startup-id picom -b
+#bar {
+#	font pango:Inconsolata 10
+#	position top
+#	tray_output none
+#	status_command /usr/bin/bumblebee-status -m nic disk:root cpu \
+#		memory battery date time pasink pasource dnf \
+#		-p root.path=/ time.format="%H:%M CW %V" date.format="%a, %b %d %Y" \
+#		-t default
+#}
 
-
-#exec --no-startup-id polybar mybar
-
+exec picom &
+exec --no-startup-id xwallpaper --center /home/duck/DemonSlayer.jpg
