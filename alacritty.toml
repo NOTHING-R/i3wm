@@ -1,0 +1,7 @@
+[colors.primary]
+background = "#000000"  # Black background
+foreground = "#ecfc0f"  # Green text (change to any color you want)
+
+[window]
+opacity = 0.5
+blur = true
